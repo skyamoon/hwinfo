@@ -23,7 +23,7 @@ std::vector<Network> getAllNetworks() {
   ULONG u_return = 0;
   IWbemClassObject* obj = nullptr;
   while (wmi.enumerator) {
-    wmi.enumerator->Next(WBEM_INFINITE, 1, &obj, &u_return);
+    wmi.enumerator->Next(static_cast<LONG>(WBEM_INFINITE), 1, &obj, &u_return);
     if (!u_return) {
       break;
     }

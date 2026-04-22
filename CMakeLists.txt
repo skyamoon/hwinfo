@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(hwinfo VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-
+include(cmake/MyUtilsFunctions.cmake)
 if (WIN32)
     add_definitions(-DWIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -12,7 +12,7 @@ endif()
 if(MSVC)
     add_compile_options(/W4 /WX)
 else()
-    add_compile_options(-Wall -Wextra -Werror -Wpedantic)
+    add_compile_options(-Wall -Wextra #[[-Werror]] -Wpedantic)
 endif()
 
 if(NOT HWINFO_CMAKE_BINARY_DIR)

@@ -24,7 +24,7 @@ if (HWINFO_BATTERY)
     if(APPLE)
         target_link_libraries(hwinfo_battery PRIVATE "-framework IOKit" "-framework CoreFoundation")
     endif()
-
+    find_windows_libs(hwinfo_battery wbemuuid)
     target_link_libraries(hwinfo INTERFACE hwinfo_battery)
 
     set_target_properties(hwinfo_battery PROPERTIES OUTPUT_NAME "hwinfo_battery")
@@ -58,7 +58,7 @@ if (HWINFO_CPU)
         target_compile_definitions(hwinfo_cpu PUBLIC -DHWINFO_EXPORTS)
     endif()
     target_include_directories(hwinfo_cpu PUBLIC $<BUILD_INTERFACE:${HWINFO_INCLUDE_DIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-
+    find_windows_libs(hwinfo_cpu ntdll PowrProf wbemuuid)
     target_link_libraries(hwinfo INTERFACE hwinfo_cpu)
 
     set_target_properties(hwinfo_cpu PROPERTIES OUTPUT_NAME "hwinfo_cpu")
@@ -99,6 +99,7 @@ if (HWINFO_DISK)
         target_link_libraries(hwinfo_disk PRIVATE "-framework IOKit" "-framework CoreFoundation")
     endif()
 
+    find_windows_libs(hwinfo_disk wbemuuid)
 
     target_link_libraries(hwinfo INTERFACE hwinfo_disk)
 
@@ -122,9 +123,7 @@ if (HWINFO_GPU)
             apple/gpu.cpp
             linux/gpu.cpp
             windows/gpu.cpp
-
             windows/utils/wmi_wrapper.cpp
-
             PCIMapper.cpp
     )
 
@@ -142,7 +141,7 @@ if (HWINFO_GPU)
     endif ()
     target_include_directories(hwinfo_gpu PUBLIC $<BUILD_INTERFACE:${HWINFO_INCLUDE_DIR}> $<BUILD_INTERFACE:${HWINFO_CMAKE_BINARY_DIR}/generated> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     add_dependencies(hwinfo_gpu generate_pci_ids_header)
-
+    find_windows_libs(hwinfo_gpu dxgi wbemuuid)
     target_link_libraries(hwinfo INTERFACE hwinfo_gpu)
 
     set_target_properties(hwinfo_gpu PROPERTIES OUTPUT_NAME "hwinfo_gpu")
@@ -179,6 +178,8 @@ if (HWINFO_MAINBOARD)
         target_link_libraries(hwinfo_mainboard PRIVATE "-framework IOKit" "-framework CoreFoundation")
     endif()
 
+    find_windows_libs(hwinfo_mainboard wbemuuid)
+
     target_link_libraries(hwinfo INTERFACE hwinfo_mainboard)
 
     set_target_properties(hwinfo_mainboard PROPERTIES OUTPUT_NAME "hwinfo_mainboard")
@@ -209,7 +210,7 @@ if (HWINFO_OS)
     endif()
     target_include_directories(hwinfo_os PUBLIC $<BUILD_INTERFACE:${HWINFO_INCLUDE_DIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-
+    find_windows_libs(hwinfo_os wbemuuid)
 
     target_link_libraries(hwinfo INTERFACE hwinfo_os)
 
@@ -245,6 +246,8 @@ if (HWINFO_RAM)
     endif()
     target_include_directories(hwinfo_ram PUBLIC $<BUILD_INTERFACE:${HWINFO_INCLUDE_DIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
+    find_windows_libs(hwinfo_ram wbemuuid)
+
     target_link_libraries(hwinfo INTERFACE hwinfo_ram)
 
     set_target_properties(hwinfo_ram PROPERTIES OUTPUT_NAME "hwinfo_ram")
@@ -278,7 +281,7 @@ if (HWINFO_NETWORK)
     endif()
     target_include_directories(hwinfo_network PUBLIC $<BUILD_INTERFACE:${HWINFO_INCLUDE_DIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-
+    find_windows_libs(hwinfo_network wbemuuid)
 
     target_link_libraries(hwinfo INTERFACE hwinfo_network)
 

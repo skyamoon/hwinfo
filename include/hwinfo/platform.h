@@ -37,7 +37,9 @@
 #else
 #define HWINFO_API __declspec(dllimport)
 #endif
+#ifdef _MSC_VER
 #pragma warning(disable : 4251)
+#endif
 #else
 #define HWINFO_API __attribute__((visibility("default")))
 #endif
